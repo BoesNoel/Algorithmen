@@ -10,7 +10,7 @@ public class BinarySearch<E extends Comparable<E>> implements Search<E> {
             int mid = (left + right) / 2;
             int keyResult = key.compareTo(a[mid]);
             if (keyResult == 0) {
-                System.out.println("obejct found at " + mid);
+                System.out.println("object found at " + mid);
                 return mid;
             } else if (keyResult < 0)
                 return search(a, key, left, mid - 1);
@@ -27,14 +27,21 @@ public class BinarySearch<E extends Comparable<E>> implements Search<E> {
 
     @Override
     public int search(E[] a, E key) {
+        int left = 0;
+        int right = a.length - 1;
 
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            int keyResult = key.compareTo(a[mid]);
+            if (keyResult == 0) {
+                return mid;
+            } else if (keyResult < 0) {
+                left = mid - 1;
+            } else {
+                right = mid + 1;
+            }
+        }
         return Search.super.search(a, key);
     }
 
-    public static void main(String[] args) {
-        Integer[] array = {1, 3, 5, 7, 9, 11, 13, 15};
-        BinarySearch<Integer> binarySearch = new BinarySearch<>();
-        int result = binarySearch.search(array, 7, 0, array.length - 1);
-
-    }
 }
