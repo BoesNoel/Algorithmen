@@ -3,40 +3,53 @@ package de.hska.iwi.ads.search;
 public class BinarySearch<E extends Comparable<E>> implements Search<E> {
 
     @Override
-    public int search(E[] a, E key, int left, int right) {
+    public int search(E[] array, E key, int left, int right) {
         if (left > right) {
-            System.out.println("object not found");
+            System.out.println("Element not found");
 
         } else {
             int mid = (left + right) / 2;
-            int keyResult = key.compareTo(a[mid]);
+            int keyResult = key.compareTo(array[mid]);
 
             if (keyResult == 0) {
-                System.out.println("object found at " + mid);
-                return mid;
+                for (int i = mid; i >= 0; i--) {
+                    if (array[i] != key) {
+                        System.out.println("Element found at " + (i + 1));
+                        return i + 1;
+                    } else if (i == 0) {
+                        return 0;
+                    }
+                }
 
             } else if (keyResult < 0)
-                return search(a, key, right, mid - 1);
+                return search(array, key, left, mid - 1);
 
             else {
-                return search(a, key, left, mid + 1);
+                return search(array, key, mid + 1, right);
 
             }
         }
 
-        return 0;
+        return -1;
     }
 
     @Override
-    public int search(E[] a, E key) {
+    public int search(E[] array, E key) {
         int left = 0;
-        int right = a.length - 1;
+        int right = array.length - 1;
 
         while (left <= right) {
             int mid = (left + right) / 2;
-            int keyResult = key.compareTo(a[mid]);
+            int keyResult = key.compareTo(array[mid]);
             if (keyResult == 0) {
-                return mid;
+                for (int i = mid; i >= 0; i--) {
+                    if (array[i] != key) {
+                        System.out.println("Element found at " + (i + 1));
+                        return i + 1;
+                    } else if (i == 0) {
+                        return 0;
+                    }
+                }
 
             } else if (keyResult < 0) {
                 right = mid - 1;
@@ -45,7 +58,7 @@ public class BinarySearch<E extends Comparable<E>> implements Search<E> {
                 left = mid + 1;
             }
         }
-        //return Search.super.search(a, key);
+        System.out.println("Element not found ");
         return -1;
     }
 
